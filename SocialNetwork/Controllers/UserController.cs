@@ -74,7 +74,7 @@ namespace SocialNetwork.Controllers
                 return Ok();
             } else
             {
-                return Forbid();
+                return BadRequest();
             }
         }
     }
