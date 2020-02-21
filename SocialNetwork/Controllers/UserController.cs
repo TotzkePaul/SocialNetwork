@@ -30,6 +30,21 @@ namespace SocialNetwork.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("whoami")]
+        public async Task<IActionResult> WhoAmI()
+        {
+            if (User?.Identity != null)
+            {
+                return Ok(User.Identity.Name);
+            }
+            else
+            {
+                return Forbid();
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("login")]
@@ -41,7 +56,8 @@ namespace SocialNetwork.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
-                return Ok();
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                return Ok(new { user.Email, user.Id, token = "34556543334" });
             }
             if (result.RequiresTwoFactor)
             {
@@ -54,7 +70,7 @@ namespace SocialNetwork.Controllers
             }
             else
             {
-                return Forbid();
+                return BadRequest();
             }            
         }
 
@@ -74,7 +90,7 @@ namespace SocialNetwork.Controllers
                 return Ok();
             } else
             {
-                return BadRequest();
+                return BadRequest(result.Errors);
             }
         }
     }

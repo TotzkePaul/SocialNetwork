@@ -23,20 +23,24 @@ export class AlertService {
     }
 
     getAlert(): Observable<any> {
+        console.log("AlertService - getAlert");
         return this.subject.asObservable();
     }
 
     success(message: string, keepAfterRouteChange = false) {
+        console.log("AlertService - success");
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'success', text: message });
     }
 
     error(message: string, keepAfterRouteChange = false) {
+        console.log("AlertService - error");
         this.keepAfterRouteChange = keepAfterRouteChange;
         this.subject.next({ type: 'error', text: message });
     }
 
     clear() {
+        console.log("AlertService - clear");
         // clear by calling subject.next() without parameters
         this.subject.next();
     }

@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
+            authenticationService.logout();
+            //this.router.navigate(['/']);
         }
     }
 
@@ -49,14 +50,18 @@ export class LoginComponent implements OnInit {
             return;
         }
 
+        console.log("LoginComponent - onSubmit - valid form");
+
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    console.log("LoginComponent - onSubmit - authenticationService - success");
+                    this.router.navigate(['/']);
                 },
                 error => {
+                    console.log("LoginComponent - onSubmit - authenticationService - failure", error);
                     this.alertService.error(error);
                     this.loading = false;
                 });

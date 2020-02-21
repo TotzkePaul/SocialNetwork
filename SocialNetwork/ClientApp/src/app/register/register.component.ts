@@ -45,15 +45,19 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
+        console.log("RegisterComponent - onSubmit - valid form");
+
         this.loading = true;
         this.userService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
                 data => {
+                    console.log("RegisterComponent - onSubmit - userService - success");
                     this.alertService.success('Registration successful', true);
                     this.router.navigate(['/login']);
                 },
                 error => {
+                    console.log("RegisterComponent - onSubmit - userService - failure", error);
                     this.alertService.error(error);
                     this.loading = false;
                 });

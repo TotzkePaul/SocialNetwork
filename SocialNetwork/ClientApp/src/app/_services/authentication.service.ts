@@ -16,20 +16,27 @@ export class AuthenticationService {
     }
 
     public get currentUserValue(): User {
+        console.log("AuthenticationService - currentUserValue", this.currentUserSubject.value);
         return this.currentUserSubject.value;
     }
 
     login(username, password) {
-      return this.http.post<any>(`/api/User/login`, { "email": username, password })
-            .pipe(map(user => {
+        console.log("AuthenticationService - login", username);
+        return this.http.post<User>(`/api/User/login`, { "email": username, password })
+            .pipe(map((user:User)  => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                let myUser :User = new User();
+                myUser.email = user.email;
+                myUser.token = user.token;
+                myUser.id = user.id;
+                localStorage.setItem('currentUser', JSON.stringify(myUser));
                 this.currentUserSubject.next(user);
                 return user;
             }));
     }
 
     logout() {
+        console.log("AuthenticationService - logout");
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);

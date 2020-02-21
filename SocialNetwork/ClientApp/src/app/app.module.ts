@@ -10,11 +10,12 @@ import { fakeBackendProvider } from './_helpers';
 import { appRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
+import { NavMenuComponent } from './nav-menu/';
+import { HomeComponent } from './home/';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
+import { AccountComponent } from './account/';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AlertComponent } from './_components';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent
+    AlertComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
